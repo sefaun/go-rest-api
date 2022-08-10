@@ -18,10 +18,7 @@ func Login(c *fiber.Ctx) error {
 
 	// Checking received data from JSON body.
 	if err := c.BodyParser(login_type); err != nil {
-		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
-			"success": false,
-			"message": err.Error(),
-		})
+		return utils.ErrorResponse(c, err.Error(), nil)
 	}
 
 	// Create a new validator for a Login model.
@@ -30,10 +27,7 @@ func Login(c *fiber.Ctx) error {
 	// Validate login_type fields.
 	if err := validate.Struct(login_type); err != nil {
 		// Return, if some fields are not valid.
-		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
-			"success": false,
-			"message": utils.ValidatorErrors(err),
-		})
+		return utils.ErrorResponse(c, utils.ValidatorErrors(err), nil)
 	}
 
 	return c.Next()

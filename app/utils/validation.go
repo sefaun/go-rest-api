@@ -23,13 +23,13 @@ func NewValidator() *validator.Validate {
 }
 
 // ValidatorErrors func for show validation errors for each invalid fields.
-func ValidatorErrors(err error) map[string]string {
+func ValidatorErrors(err error) string {
 	// Define fields map.
-	fields := map[string]string{}
+	var fields string
 
 	// Make error message for each invalid field.
 	for _, err := range err.(validator.ValidationErrors) {
-		fields[err.Field()] = err.Error()
+		fields += err.Error() + ". "
 	}
 
 	return fields

@@ -1,13 +1,18 @@
 package controllers
 
-import "github.com/gofiber/fiber/v2"
+import (
+	"go-rest-api/app/utils"
+
+	"github.com/gofiber/fiber/v2"
+)
 
 func Login(c *fiber.Ctx) error {
 
-	user := "sefa createds"
+	fields := make(map[string]interface{})
 
-	return c.Status(fiber.StatusCreated).JSON(fiber.Map{
-		"success": false,
-		"data":    user,
-	})
+	fields["username"] = "sefa"
+	fields["password"] = "mypassword"
+	fields["token"] = "BearerToken"
+
+	return utils.SuccessResponse(c, "user_created", fields)
 }

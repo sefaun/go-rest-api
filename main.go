@@ -14,10 +14,6 @@ func main() {
 
 	app := fiber.New(config)
 
-	// Default config
-	app.Use(cors.New())
-
-	// Or extend your config for customization
 	app.Use(cors.New(cors.Config{
 		AllowOrigins: "",
 		AllowHeaders: "Origin, Content-Type, Accept",
@@ -29,10 +25,10 @@ func main() {
 
 	app.Use(func(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{
-			"error": true,
-			"msg":   "Not Found",
+			"success": false,
+			"message": "Not Found",
 		})
-	},
-	)
+	})
+
 	app.Listen(":5000")
 }
