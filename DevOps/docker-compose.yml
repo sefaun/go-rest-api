@@ -1,0 +1,29 @@
+version: '3.9'
+
+services:
+
+  db:
+    container_name: test-postgresql
+    image: timescale/timescaledb:latest-pg13
+    restart: always
+    volumes:
+      - postgresql:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_DB: test_db
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: test
+      TZ: Europe/Istanbul
+
+  redis:
+    image: redis:6.2.6
+    command: redis-server /usr/local/etc/redis/redis.conf
+    restart: always
+    ports:
+      - 6379:6379
+    volumes:
+      - ./redis.conf:/usr/local/etc/redis/redis.conf
+
+volumes:
+  postgresql:
