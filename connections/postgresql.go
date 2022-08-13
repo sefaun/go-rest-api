@@ -18,7 +18,13 @@ func CreatePostgreSQLConnection() {
 		log.Fatal(err)
 	}
 
-	PostgresqlConnection = connection
+	err = connection.Ping()
 
-	println("PostgreSQL Connected !")
+	if err != nil {
+		log.Fatal("Unable to connect to Redis", err)
+	}
+
+	log.Println("PostgreSQL Connected !")
+
+	PostgresqlConnection = connection
 }

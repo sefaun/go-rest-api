@@ -1,6 +1,7 @@
 package connections
 
 import (
+	"log"
 	"os"
 	"strconv"
 
@@ -20,5 +21,11 @@ func CreateRedisConnection() {
 
 	RedisConnection = redis.NewClient(options)
 
-	println("Redis Connected !")
+	_, err := RedisConnection.Ping().Result()
+
+	if err != nil {
+		log.Fatal("Unable to connect to Redis", err)
+	}
+
+	log.Println("Redis Connected !")
 }
