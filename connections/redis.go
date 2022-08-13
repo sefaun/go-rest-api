@@ -1,18 +1,15 @@
 package connections
 
 import (
-	"fmt"
 	"os"
 	"strconv"
 
 	"github.com/go-redis/redis"
 )
 
-type Redis struct {
-	RedisConnection *redis.Client
-}
+var RedisConnection *redis.Client
 
-func (con *Redis) CreateRedisConnection() {
+func CreateRedisConnection() {
 	dbNumber, _ := strconv.Atoi(os.Getenv("REDIS_DB_NUMBER"))
 
 	options := &redis.Options{
@@ -21,15 +18,7 @@ func (con *Redis) CreateRedisConnection() {
 		DB:       dbNumber,
 	}
 
-	con.RedisConnection = redis.NewClient(options)
-}
+	RedisConnection = redis.NewClient(options)
 
-func (con *Redis) GetSetTesting(data string) (string, error) {
-	_, err := con.RedisConnection.Set("sefa", data, 0).Result()
-
-	if err != nil {
-		fmt.Println("Redis Set Error", err)
-	}
-
-	return con.RedisConnection.Get("sefa").Result()
+	println("Redis Connected !")
 }

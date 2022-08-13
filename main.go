@@ -2,6 +2,7 @@ package main
 
 import (
 	"go-rest-api/configs"
+	"go-rest-api/connections"
 	"go-rest-api/routes"
 
 	"github.com/gofiber/fiber/v2"
@@ -16,6 +17,9 @@ func main() {
 	if err != nil {
 		print("Error loading .env file")
 	}
+
+	connections.CreateRedisConnection()
+	connections.CreatePostgreSQLConnection()
 
 	config := configs.FiberConfig()
 
